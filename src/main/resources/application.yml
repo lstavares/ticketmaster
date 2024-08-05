@@ -1,1 +1,7 @@
-spring.application.name=ticketmaster
+server:
+  servlet:
+    context-path: /ticketmaster
+
+spring:
+  application:
+    name: ticketmaster
