@@ -1,15 +1,20 @@
 package com.mercadolivre.ticketmaster.adapters;
 
 
+import com.mercadolivre.ticketmaster.application.service.CategoryService;
+import com.mercadolivre.ticketmaster.domain.Category;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 import static org.springframework.http.ResponseEntity.created;
 import static org.springframework.http.ResponseEntity.noContent;
@@ -20,28 +25,31 @@ import static org.springframework.http.ResponseEntity.ok;
 @RequiredArgsConstructor
 public class CategoryController {
 
+    private final CategoryService categoryService;
+
     @PostMapping
-    public ResponseEntity<?> create(HttpRequest httpRequest) {
-        return created(httpRequest.getURI()).body("Category create method");
+    public ResponseEntity<Category> save(@RequestBody Category category, HttpRequest httpRequest) {
+        return created(httpRequest.getURI()).body(categoryService.save(category));
     }
 
     @GetMapping
-    public ResponseEntity<?> list() {
-        return ok("Category list method");
+    public ResponseEntity<List<Category>> list() {
+        return ok(categoryService.list());
     }
 
-    @GetMapping("/{ticketId}")
-    public ResponseEntity<?> get(String ticketId) {
-        return ok("Category get method");
+    @GetMapping("/{categoryId}")
+    public ResponseEntity<?> get(@PathVariable Long categoryId) {
+        return ok(categoryService.get(categoryId));
     }
 
-    @PatchMapping
-    public ResponseEntity<?> update() {
-        return ok("Category update method");
-    }
-
-    @DeleteMapping
-    public ResponseEntity<?> delete() {
+    @DeleteMapping("/{categoryId}")
+    public ResponseEntity<Void> delete(@PathVariable Long categoryId) {
+        categoryService.delete(categoryId);
         return noContent().build();
+    }
+
+    @GetMapping("/subcategories/{parentId}")
+    public ResponseEntity<List<Category>> findByParent(@PathVariable Long parentId) {
+        return ok(categoryService.getByParent(parentId));
     }
 }

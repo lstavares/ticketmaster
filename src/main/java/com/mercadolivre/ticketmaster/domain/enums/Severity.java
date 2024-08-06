@@ -1,5 +1,7 @@
 package com.mercadolivre.ticketmaster.domain.enums;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -12,7 +14,19 @@ public enum Severity {
     MEDIUM(3, "Medium"),
     LOW(4, "Low");
 
-    private final int code;
+    @JsonValue
+    private final Integer code;
+
     private final String description;
+
+    @JsonCreator
+    public static Severity fromValue(Integer value) {
+        for (Severity type : Severity.values()) {
+            if (type.code.equals(value)) {
+                return type;
+            }
+        }
+        throw new IllegalArgumentException("Unknown severity type " + value);
+    }
 
 }

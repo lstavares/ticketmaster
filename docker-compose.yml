@@ -1,14 +1,13 @@
-version: '3.8'
-
 services:
   app:
     build: .
     ports:
       - "8080:8080"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/ticketmaster_database
-      SPRING_DATASOURCE_USERNAME: ticket
-      SPRING_DATASOURCE_PASSWORD: master
+      API_USERS_SERVICE_URL: https://jsonplaceholder.typicode.com
+      TICKETMASTER_DATABASE_URL: jdbc:postgresql://db:5432/ticketmaster_database
+      TICKETMASTER_DATABASE_USERNAME: ticket
+      TICKETMASTER_DATABASE_PASSWORD: master
     depends_on:
       - db
 
