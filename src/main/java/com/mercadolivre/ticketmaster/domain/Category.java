@@ -1,37 +1,31 @@
 package com.mercadolivre.ticketmaster.domain;
 
-
-import com.mercadolivre.ticketmaster.domain.enums.Severity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Transient;
+import jakarta.persistence.OneToMany;
 import lombok.Data;
 
-import java.time.LocalDateTime;
+import java.util.List;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
 
-@Data
 @Entity
-public class Ticket {
+@Data
+public class Category {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
-    private String title;
-    private String description;
-    private LocalDateTime createdAt;
-
-    @Transient
-    private User user;
+    private String name;
 
     @ManyToOne
-    @JoinColumn(name = "category_id")
-    private Category category;
+    @JoinColumn(name = "parent_id")
+    private Category parent;
 
-    private Severity severity;
+    @OneToMany(mappedBy = "parent")
+    private List<Category> subcategories;
 }
