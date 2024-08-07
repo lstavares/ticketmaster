@@ -1,5 +1,6 @@
 services:
   app:
+    container_name: ticket_app
     build: .
     ports:
       - "8080:8080"
@@ -9,18 +10,32 @@ services:
       TICKETMASTER_DATABASE_USERNAME: ticket
       TICKETMASTER_DATABASE_PASSWORD: master
     depends_on:
-      - db
+      db:
+        condition: service_healthy
+    networks:
+      - default
 
   db:
     image: postgres:15
+    container_name: ticket_db
     environment:
-      POSTGRES_DB: ticketmaster_database
       POSTGRES_USER: ticket
       POSTGRES_PASSWORD: master
+      POSTGRES_DB: ticketmaster_database
     ports:
       - "5432:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - ./create-db.sh:/docker-entrypoint-initdb.d/create-db.sh
+      - ./init-scripts:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -h db -p 5432 -U ticket" ]
+      interval: 10s
+      retries: 5
+    networks:
+      - default
+    entrypoint: [ "/bin/bash", "/docker-entrypoint-initdb.d/create-db.sh" ]
 
-volumes:
-  postgres_data:
+
+networks:
+  default:
+    driver: bridge
