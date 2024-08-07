@@ -1,14 +1,18 @@
 # Use uma imagem base do JDK
 FROM openjdk:17-jdk-slim
 
-# Defina o diretório de trabalho
-WORKDIR /app
+# Copy your project's JAR file into the container
+ARG JAR_FILE=target/*.jar
+COPY ${JAR_FILE} app.jar
 
-# Copie o arquivo JAR do seu projeto para o contêiner
-COPY target/ticketmaster-0.0.1-SNAPSHOT.jar app.jar
+# Copy start-app.sh script in to container
+COPY start-app.sh /start-app.sh
 
-# Exponha a porta que seu aplicativo vai usar
+# Expose the port your application will use
 EXPOSE 8080
 
-# Comando para executar a aplicação
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# Give execute permission to the script
+RUN chmod +x /start-app.sh
+
+# Command to run the application
+ENTRYPOINT ["./start-app.sh"]

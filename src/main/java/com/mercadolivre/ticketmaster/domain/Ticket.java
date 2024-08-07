@@ -1,7 +1,6 @@
 package com.mercadolivre.ticketmaster.domain;
 
 
-import com.mercadolivre.ticketmaster.domain.enums.Severity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -33,5 +32,12 @@ public class Ticket {
     @JoinColumn(name = "category_id")
     private Category category;
 
+    @ManyToOne
+    @JoinColumn(name = "subcategory_id")
+    private Category subcategory;
+
+    @ManyToOne
+    @JoinColumn(name = "severity_id")
     private Severity severity;
+
 }

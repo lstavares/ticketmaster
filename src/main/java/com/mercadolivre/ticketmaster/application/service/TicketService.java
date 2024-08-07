@@ -21,7 +21,9 @@ public class TicketService {
     private final TicketRepository ticketRepository;
 
     public List<Ticket> list() {
-        return ticketRepository.findAll();
+        List<Ticket> ticketList = ticketRepository.findAll();
+        ticketList.forEach(ticket -> ticket.setUser(getCurrentUser()));
+        return ticketList;
     }
 
     public Ticket get(Long ticketId) {

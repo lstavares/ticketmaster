@@ -4,8 +4,6 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.Data;
 
@@ -16,20 +14,17 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Data
-public class Category {
+public class Severity {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
-    private String name;
+    private String level;
 
-    @ManyToOne
-    @JoinColumn(name = "parent_id")
+    @OneToMany(mappedBy = "severity", cascade = ALL)
     @JsonBackReference
-    private Category parent;
+    private List<Ticket> tickets;
 
-    @OneToMany(mappedBy = "parent", cascade = ALL)
-    @JsonBackReference
-    private List<Category> subcategories;
 }
+
