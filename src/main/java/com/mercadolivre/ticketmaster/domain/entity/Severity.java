@@ -1,4 +1,4 @@
-package com.mercadolivre.ticketmaster.domain;
+package com.mercadolivre.ticketmaster.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Entity;

@@ -1,17 +1,6 @@
 -- Connect into ticket_management database
 \c ticketmaster_database;
 
--- Create Customer table if not exists
-DO $$ BEGIN
-    CREATE TABLE IF NOT EXISTS Customer (
-        id SERIAL PRIMARY KEY,
-        name VARCHAR(255) NOT NULL,
-        email VARCHAR(255) NOT NULL
-    );
-EXCEPTION
-    WHEN duplicate_table THEN RAISE NOTICE 'Table Customer already exists.';
-END $$;
-
 -- Create Severity table if not exists
 DO $$ BEGIN
     CREATE TABLE IF NOT EXISTS Severity (
@@ -40,12 +29,12 @@ DO $$ BEGIN
         id SERIAL PRIMARY KEY,
         title VARCHAR(255) NOT NULL,
         description TEXT,
-        created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         customer_id INTEGER,
         category_id INTEGER,
         subcategory_id INTEGER,
         severity_id INTEGER,
-        FOREIGN KEY (customer_id) REFERENCES Customer (id) ON DELETE SET NULL,
         FOREIGN KEY (category_id) REFERENCES Category (id) ON DELETE SET NULL,
         FOREIGN KEY (subcategory_id) REFERENCES Category (id) ON DELETE SET NULL,
         FOREIGN KEY (severity_id) REFERENCES Severity (id) ON DELETE SET NULL

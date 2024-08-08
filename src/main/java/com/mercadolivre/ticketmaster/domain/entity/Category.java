@@ -1,6 +1,5 @@
-package com.mercadolivre.ticketmaster.domain;
+package com.mercadolivre.ticketmaster.domain.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -8,14 +7,17 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.Data;
+import org.hibernate.annotations.DynamicUpdate;
 
 import java.util.List;
 
 import static jakarta.persistence.CascadeType.ALL;
+import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Data
+@DynamicUpdate
 public class Category {
 
     @Id
@@ -24,12 +26,13 @@ public class Category {
 
     private String name;
 
-    @ManyToOne
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "parent_id")
-    @JsonBackReference
     private Category parent;
 
     @OneToMany(mappedBy = "parent", cascade = ALL)
-    @JsonBackReference
     private List<Category> subcategories;
+
+    @OneToMany(mappedBy = "category", cascade = ALL)
+    private List<Ticket> tickets;
 }

@@ -1,6 +1,7 @@
-package com.mercadolivre.ticketmaster.domain;
+package com.mercadolivre.ticketmaster.domain.entity;
 
 
+import com.mercadolivre.ticketmaster.domain.dto.UserDTO;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -8,6 +9,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Transient;
 import lombok.Data;
+import org.hibernate.annotations.DynamicUpdate;
 
 import java.time.LocalDateTime;
 
@@ -15,6 +17,7 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 
 @Data
 @Entity
+@DynamicUpdate
 public class Ticket {
 
     @Id
@@ -24,9 +27,11 @@ public class Ticket {
     private String title;
     private String description;
     private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+    private Long customerId;
 
     @Transient
-    private User user;
+    private UserDTO user;
 
     @ManyToOne
     @JoinColumn(name = "category_id")

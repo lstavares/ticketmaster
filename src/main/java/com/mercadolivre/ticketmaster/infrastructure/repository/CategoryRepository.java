@@ -1,6 +1,6 @@
 package com.mercadolivre.ticketmaster.infrastructure.repository;
 
-import com.mercadolivre.ticketmaster.domain.Category;
+import com.mercadolivre.ticketmaster.domain.entity.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
