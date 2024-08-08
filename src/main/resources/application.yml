@@ -10,9 +10,8 @@ spring:
     username: ${TICKETMASTER_DATABASE_USERNAME}
     password: ${TICKETMASTER_DATABASE_PASSWORD}
     driverClassName: org.postgresql.Driver
-#  jpa:
-#    hibernate:
-#      ddl-auto: update
+  jackson:
+    default-property-inclusion: non_null
 
 api:
   users:

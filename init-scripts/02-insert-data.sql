@@ -1,17 +1,6 @@
 -- Connect into ticket_management database
 \c ticketmaster_database;
 
--- Populating the Customer Table only if there is no data
-DO $$
-BEGIN
-    IF NOT EXISTS (SELECT 1 FROM Customer) THEN
-        INSERT INTO Customer (name, email) VALUES
-        ('John Doe', 'john.doe@example.com'),
-        ('Jane Smith', 'jane.smith@example.com'),
-        ('Alice Johnson', 'alice.johnson@example.com');
-    END IF;
-END $$;
-
 -- Populating the Severity Table only if there is no data
 DO $$
 BEGIN

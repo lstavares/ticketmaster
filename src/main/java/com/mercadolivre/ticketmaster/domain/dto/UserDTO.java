@@ -1,9 +1,9 @@
-package com.mercadolivre.ticketmaster.domain;
+package com.mercadolivre.ticketmaster.domain.dto;
 
 import lombok.Data;
 
 @Data
-public class User {
+public class UserDTO {
     private Long id;
     private String name;
     private String username;

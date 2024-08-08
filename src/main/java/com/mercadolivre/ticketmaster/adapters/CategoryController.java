@@ -2,7 +2,8 @@ package com.mercadolivre.ticketmaster.adapters;
 
 
 import com.mercadolivre.ticketmaster.application.service.CategoryService;
-import com.mercadolivre.ticketmaster.domain.Category;
+import com.mercadolivre.ticketmaster.domain.dto.CategoryDTO;
+import com.mercadolivre.ticketmaster.domain.entity.Category;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +29,7 @@ public class CategoryController {
     private final CategoryService categoryService;
 
     @PostMapping
-    public ResponseEntity<Category> save(@RequestBody Category category, HttpRequest httpRequest) {
+    public ResponseEntity<CategoryDTO> save(@RequestBody CategoryDTO category, HttpRequest httpRequest) {
         return created(httpRequest.getURI()).body(categoryService.save(category));
     }
 
@@ -38,7 +39,7 @@ public class CategoryController {
     }
 
     @GetMapping("/{categoryId}")
-    public ResponseEntity<?> get(@PathVariable Long categoryId) {
+    public ResponseEntity<Category> get(@PathVariable Long categoryId) {
         return ok(categoryService.get(categoryId));
     }
 
