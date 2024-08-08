@@ -3,10 +3,11 @@ package com.mercadolivre.ticketmaster.adapters;
 
 import com.mercadolivre.ticketmaster.application.service.CategoryService;
 import com.mercadolivre.ticketmaster.domain.dto.CategoryDTO;
-import com.mercadolivre.ticketmaster.domain.entity.Category;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpRequest;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.net.URI;
 import java.util.List;
 
 import static org.springframework.http.ResponseEntity.created;
@@ -23,23 +25,24 @@ import static org.springframework.http.ResponseEntity.ok;
 
 @RestController
 @RequestMapping("/categories")
+@Validated
 @RequiredArgsConstructor
 public class CategoryController {
 
     private final CategoryService categoryService;
 
     @PostMapping
-    public ResponseEntity<CategoryDTO> save(@RequestBody CategoryDTO category, HttpRequest httpRequest) {
-        return created(httpRequest.getURI()).body(categoryService.save(category));
+    public ResponseEntity<CategoryDTO> save(@Valid @RequestBody CategoryDTO category, HttpServletRequest httpRequest) {
+        return created(URI.create(httpRequest.getRequestURI())).body(categoryService.save(category));
     }
 
     @GetMapping
-    public ResponseEntity<List<Category>> list() {
+    public ResponseEntity<List<CategoryDTO>> list() {
         return ok(categoryService.list());
     }
 
     @GetMapping("/{categoryId}")
-    public ResponseEntity<Category> get(@PathVariable Long categoryId) {
+    public ResponseEntity<CategoryDTO> get(@PathVariable Long categoryId) {
         return ok(categoryService.get(categoryId));
     }
 
@@ -50,7 +53,7 @@ public class CategoryController {
     }
 
     @GetMapping("/subcategories/{parentId}")
-    public ResponseEntity<List<Category>> findByParent(@PathVariable Long parentId) {
+    public ResponseEntity<List<CategoryDTO>> findByParent(@PathVariable Long parentId) {
         return ok(categoryService.getByParent(parentId));
     }
 }

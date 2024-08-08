@@ -4,6 +4,7 @@ import com.mercadolivre.ticketmaster.adapters.TicketController;
 import com.mercadolivre.ticketmaster.domain.exception.BusinessException;
 import jakarta.validation.ValidationException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -27,6 +28,11 @@ public class TicketControllerHandler {
     @ExceptionHandler(BusinessException.class)
     public ResponseEntity<?> handleBusinessException(BusinessException e){
         return new ResponseEntity<>(of("message", e.getMessage()), e.getHttpStatus());
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<?> handleHttpMessageNotReadableException(HttpMessageNotReadableException e){
+        return badRequest().body(of("message", "A mensagem recebida não pode ser lida. Verifique a formatação do Request Body."));
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

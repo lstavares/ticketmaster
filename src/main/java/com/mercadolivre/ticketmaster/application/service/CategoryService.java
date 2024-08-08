@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -17,12 +18,12 @@ public class CategoryService {
     private final CategoryRepository categoryRepository;
     private final CategoryMapper categoryMapper;
 
-    public List<Category> list() {
-        return categoryRepository.findAll();
+    public List<CategoryDTO> list() {
+        return categoryRepository.findAll().stream().map(categoryMapper::toDto).collect(Collectors.toList());
     }
 
-    public Category get(Long categoryId) {
-        return categoryRepository.findById(categoryId).orElseThrow(() -> new CategoryNotFoundException(categoryId));
+    public CategoryDTO get(Long categoryId) {
+        return categoryMapper.toDto(categoryRepository.findById(categoryId).orElseThrow(() -> new CategoryNotFoundException(categoryId)));
     }
 
     public CategoryDTO save(CategoryDTO categoryDTO) {
@@ -44,8 +45,8 @@ public class CategoryService {
         categoryRepository.deleteById(categoryId);
     }
 
-    public List<Category> getByParent(Long parentId) {
-        Category parent = get(parentId);
-        return categoryRepository.findByParent(parent);
+    public List<CategoryDTO> getByParent(Long parentId) {
+        Category parent = categoryRepository.findById(parentId).orElseThrow(() -> new CategoryNotFoundException(parentId));
+        return categoryRepository.findByParent(parent).stream().map(categoryMapper::toDto).collect(Collectors.toList());
     }
 }
