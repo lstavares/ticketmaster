@@ -1,0 +1,18 @@
+server:
+  servlet:
+    context-path: /ticketmaster
+
+spring:
+  application:
+    name: ticketmaster
+  datasource:
+    url: ${TICKETMASTER_DATABASE_URL}
+    username: ${TICKETMASTER_DATABASE_USERNAME}
+    password: ${TICKETMASTER_DATABASE_PASSWORD}
+    driverClassName: org.postgresql.Driver
+  jackson:
+    default-property-inclusion: non_null
+
+api:
+  users:
+    url: ${API_USERS_SERVICE_URL}
