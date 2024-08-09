@@ -22,8 +22,6 @@ public interface CategoryMapper {
     @Mapping(source = "subcategories", target = "subcategories")
     CategoryDTO toDto(Category category);
 
-    void updateFromDto(CategoryDTO categoryDTO, @MappingTarget Category category);
-
     default List<CategoryDTO> mapSubcategories(List<Category> subcategories) {
         if (subcategories == null || subcategories.isEmpty()) {
             return Collections.emptyList();
@@ -31,5 +29,20 @@ public interface CategoryMapper {
         return subcategories.stream()
                 .map(this::toDto)
                 .collect(Collectors.toList());
+    }
+
+    default CategoryDTO mapParent(Category parent) {
+        return parent != null ? toDto(parent) : null; // Converte o parent para CategoryDTO ou retorna null
+    }
+
+    default void mergeFromDto(CategoryDTO categoryDTO, @MappingTarget Category category) {
+
+        if (!categoryDTO.getName().equals(category.getName())) {
+            category.setName(categoryDTO.getName());
+        }
+
+        if (categoryDTO.getParent() != null) {
+            category.setParent(Category.builder().id(categoryDTO.getParent().getId()).build());
+        }
     }
 }

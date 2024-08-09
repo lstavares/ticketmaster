@@ -23,8 +23,6 @@ public interface TicketMapper {
     @Mapping(source = "severity.id", target = "severityLevel")
     TicketDTO toDto(Ticket ticket);
 
-    void updateFromDto(TicketDTO ticketDTO, @MappingTarget Ticket ticket);
-
     default Category map(String categoryName) {
         if (categoryName == null) {
             return null;

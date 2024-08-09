@@ -14,4 +14,5 @@ public class CategoryDTO {
     @Valid
     private ParentDTO parent;
     private List<CategoryDTO> subcategories;
+
 }
