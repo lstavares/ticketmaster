@@ -1,0 +1,123 @@
+openapi: 3.0.0
+info:
+  title: API Ticketmaster
+  description: API para gerenciamento de tickets, categorias e subcategorias.
+  version: "1.0"
+servers:
+  - url: http://localhost:8080/ticketmaster
+paths:
+  /tickets:
+    post:
+      summary: Criar um novo ticket
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TicketRequest'
+      responses:
+        '201':
+          description: Ticket criado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TicketResponse'
+    get:
+      summary: Listar todos os tickets
+      responses:
+        '200':
+          description: Lista de tickets
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TicketResponse'
+  /tickets/{ticketId}:
+    get:
+      summary: Obter um ticket por ID
+      parameters:
+        - name: ticketId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Ticket encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TicketResponse'
+    put:
+      summary: Atualizar um ticket
+      parameters:
+        - name: ticketId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TicketRequest'
+      responses:
+        '200':
+          description: Ticket atualizado com sucesso
+    delete:
+      summary: Deletar um ticket
+      parameters:
+        - name: ticketId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Ticket deletado com sucesso
+components:
+  schemas:
+    TicketRequest:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        categoryId:
+          type: integer
+        subcategoryId:
+          type: integer
+        severityLevel:
+          type: integer
+    TicketResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        description:
+          type: string
+        category:
+          $ref: '#/components/schemas/Category'
+        subcategory:
+          $ref: '#/components/schemas/Subcategory'
+        severityLevel:
+          type: integer
+    Category:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+    Subcategory:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string

@@ -35,6 +35,14 @@ services:
       - default
     entrypoint: [ "/bin/bash", "/docker-entrypoint-initdb.d/create-db.sh" ]
 
+  swagger-ui:
+    image: swaggerapi/swagger-ui
+    ports:
+      - "8081:8080"
+    environment:
+      SWAGGER_JSON: /openapi/openapi.yaml
+    volumes:
+      - ./openapi_ticketmaster_doc.yml:/openapi/openapi.yaml
 
 networks:
   default:
