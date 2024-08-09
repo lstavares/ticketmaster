@@ -1,0 +1,7 @@
+{
+  "title": "New Ticket",
+  "description": "New Description",
+  "categoryId": 1,
+  "subcategoryId": 3,
+  "severityLevel": 2
+}

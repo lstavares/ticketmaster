@@ -20,6 +20,7 @@ public class CategorySubcategoryValidator implements ConstraintValidator<ValidCa
             return true; // Se não houver subcategoria, não há o que validar
         }
 
+        var categoriesList = categoryRepository.findAll();
         var category = categoryRepository.findById(ticketDTO.getCategoryId());
         var subcategory = categoryRepository.findById(ticketDTO.getSubcategoryId());
 

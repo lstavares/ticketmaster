@@ -36,7 +36,7 @@ public class CategoryService {
                 .orElseThrow(() -> new CategoryNotFoundException(categoryId));
 
         // Atualiza apenas os campos que foram modificados
-        categoryMapper.updateFromDto(categoryDTO, categoryToUpdate);
+        categoryMapper.mergeFromDto(categoryDTO, categoryToUpdate);
 
         return categoryMapper.toDto(categoryRepository.save(categoryToUpdate));
     }
