@@ -49,11 +49,7 @@ public class TicketControllerHandler {
 
     @ExceptionHandler(ValidationException.class)
     public ResponseEntity<Map<String, String>> handleValidationException(ValidationException ex) {
-        Map<String, String> errors = new HashMap<>();
-        String fieldName = "subcategoryId";
-        String errorMessage = ex.getCause().getMessage();
-        errors.put(fieldName, errorMessage);
-        return badRequest().body(errors);
+        return badRequest().body(of("message", ex.getCause().getMessage()));
     }
 
 }

@@ -91,4 +91,15 @@ public class TicketControllerIntegrationTest {
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.title").value("must not be blank"));
     }
+
+    @Test
+    public void testCreateTicketWithInvalidSeverity() throws Exception {
+        String invalidSeverityTicketJson = loadJson("ticket_invalid_severity.json");
+
+        mockMvc.perform(post("/tickets")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(invalidSeverityTicketJson))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.message").value("Por favor, crie um ticket no link: http://example/fast, a equipe de guardian buscará resolver a sua issue."));
+    }
 }
