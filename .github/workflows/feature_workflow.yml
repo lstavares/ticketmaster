@@ -42,6 +42,6 @@ jobs:
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         pr_title: "Merge Feature Branch: ${{ github.ref }}"
-        pr_body: "Automatically generated PR to merge the feature branch into develop."
+        pr_body: "PR gerado automaticamente para mesclar o branch de recurso no desenvolvimento."
         destination_branch: "develop"
         source_branch: "${{ github.ref }}"
