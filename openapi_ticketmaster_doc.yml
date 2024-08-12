@@ -77,6 +77,77 @@ paths:
       responses:
         '204':
           description: Ticket deletado com sucesso
+  /categories:
+    post:
+      summary: Criar uma nova categoria
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CategoryRequest'
+      responses:
+        '201':
+          description: Categoria criado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TicketResponse'
+    get:
+      summary: Listar todas as categorias
+      responses:
+        '200':
+          description: Lista de categories
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CategoryResponse'
+  /categories/{categoryId}:
+    get:
+      summary: Obter uma categoria por ID
+      parameters:
+        - name: categoryId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Categoria encontrada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CategoryResponse'
+    put:
+      summary: Atualizar uma categoria
+      parameters:
+        - name: categoryId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CategoryRequest'
+      responses:
+        '200':
+          description: Categoria atualizada com sucesso
+    delete:
+      summary: Deletar uma categoria
+      parameters:
+        - name: categoryId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Categoria deletada com sucesso
 components:
   schemas:
     TicketRequest:
@@ -107,6 +178,38 @@ components:
           $ref: '#/components/schemas/Subcategory'
         severityLevel:
           type: integer
+    CategoryRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        parent:
+          type: object
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+        subcategories:
+          type: array
+          items:
+            $ref: '#/components/schemas/Subcategory'
+    CategoryResponse:
+      type: object
+      properties:
+        name:
+          type: string
+        parent:
+          type: object
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+        subcategories:
+          type: array
+          items:
+            $ref: '#/components/schemas/Subcategory'
     Category:
       type: object
       properties:
@@ -114,6 +217,17 @@ components:
           type: integer
         name:
           type: string
+        parent:
+          type: object
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+        subcategories:
+          type: array
+          items:
+            $ref: '#/components/schemas/Subcategory'
     Subcategory:
       type: object
       properties:
