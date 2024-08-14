@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import api from '../services/api';
 
-const CategoryForm = ({ categoryId }) => {
-  const [category, setCategory] = useState({ name: '', parentId: null });
+const CategoryForm = () => {
+  const { categoryId } = useParams();
+  const [category, setCategory] = useState({ name: '', parent: null });
   const [categories, setCategories] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     api.get('/categories')
@@ -18,7 +21,14 @@ const CategoryForm = ({ categoryId }) => {
   }, [categoryId]);
 
   const handleChange = (e) => {
-    setCategory({ ...category, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setCategory({ ...category, [name]: value });
+  };
+
+  const handleParentChange = (e) => {
+    const parentId = e.target.value;
+    const parentCategory = categories.find(cat => cat.id === parseInt(parentId, 10));
+    setCategory({ ...category, parent: parentCategory || null });
   };
 
   const handleSubmit = (e) => {
@@ -27,8 +37,17 @@ const CategoryForm = ({ categoryId }) => {
     const endpoint = categoryId ? `/categories/${categoryId}` : '/categories';
 
     apiMethod(endpoint, category)
-      .then(() => alert('Category saved successfully!'))
-      .catch(error => console.error('Error saving category:', error));
+      .then(() => {
+        alert('Category saved successfully!');
+        navigate('/categories');
+      })
+      .catch(error => {
+        if (error.response && error.response.status === 400) {
+          alert(error.response.data.message);
+        } else {
+          console.error('Error saving category:', error);
+        }
+      });
   };
 
   return (
@@ -39,8 +58,8 @@ const CategoryForm = ({ categoryId }) => {
       </div>
       <div>
         <label>Parent Category</label>
-        <select name="parentId" value={category.parentId || ''} onChange={handleChange}>
-          <option value=''>None</option>
+        <select name="parent" value={category.parent?.id || ''} onChange={handleParentChange}>
+          <option value="">-- Select one --</option>
           {categories.map(cat => (
             <option key={cat.id} value={cat.id}>{cat.name}</option>
           ))}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import TicketList from './components/TicketList';
 import CategoryList from './components/CategoryList';
 import TicketForm from './components/TicketForm';
@@ -27,12 +27,12 @@ function App() {
         </nav>
 
         <Routes>
-          <Route path="/tickets" exact component={TicketList} />
-          <Route path="/categories" exact component={CategoryList} />
-          <Route path="/tickets/new" component={TicketForm} />
-          <Route path="/categories/new" component={CategoryForm} />
-          <Route path="/tickets/edit/:id" component={TicketForm} />
-          <Route path="/categories/edit/:id" component={CategoryForm} />
+          <Route path="/tickets" element={<TicketList />} />
+          <Route path="/categories" element={<CategoryList />} />
+          <Route path="/tickets/new" element={<TicketForm />} />
+          <Route path="/categories/new" element={<CategoryForm />} />
+          <Route path="/tickets/edit/:id" element={<TicketForm />} />
+          <Route path="/categories/edit/:id" element={<CategoryForm />} />
         </Routes>
       </div>
     </Router>

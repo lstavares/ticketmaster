@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.net.URI;
 import java.util.List;
 
+import static java.net.URI.create;
 import static org.springframework.http.ResponseEntity.created;
 import static org.springframework.http.ResponseEntity.noContent;
 import static org.springframework.http.ResponseEntity.ok;
@@ -34,7 +34,7 @@ public class CategoryController {
 
     @PostMapping
     public ResponseEntity<CategoryDTO> save(@Valid @RequestBody CategoryDTO category, HttpServletRequest httpRequest) {
-        return created(URI.create(httpRequest.getRequestURI())).body(categoryService.save(category));
+        return created(create(httpRequest.getRequestURI())).body(categoryService.save(category));
     }
 
     @GetMapping

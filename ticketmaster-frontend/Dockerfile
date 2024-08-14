@@ -1,5 +1,5 @@
 # Usando a imagem oficial do Node.js como base
-FROM node:16-alpine
+FROM node:16 as build
 
 LABEL authors="leandrotavares"
 
@@ -18,11 +18,8 @@ COPY . .
 # Construindo a aplicação para produção
 RUN npm run build
 
-# Instalando o servidor para servir a aplicação
-RUN npm install -g serve
-
 # Expondo a porta na qual a aplicação será executada
 EXPOSE 3000
 
 # Comando para iniciar a aplicação
-CMD ["serve", "-s", "build"]
+CMD ["npm", "start"]
