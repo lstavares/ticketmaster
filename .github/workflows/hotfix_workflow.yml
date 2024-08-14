@@ -42,7 +42,7 @@ jobs:
       - name: Open Pull Request
         uses: repo-sync/pull-request@v2
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.GIT_HUB_ACTIONS_TOKEN }}
           pr_title: "Merge Hotfix Branch: ${{ github.ref }}"
           pr_body: "PR gerado automaticamente para mesclar o branch de hotfix no desenvolvimento."
           destination_branch: "develop"
@@ -57,7 +57,7 @@ jobs:
       - name: Open Pull Request
         uses: repo-sync/pull-request@v2
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.GIT_HUB_ACTIONS_TOKEN }}
           pr_title: "Merge Hotfix Branch: ${{ github.ref }}"
           pr_body: "PR gerado automaticamente para mesclar o branch de hotfix no master."
           destination_branch: "master"
