@@ -36,7 +36,7 @@ O projeto Ticketmaster é uma solução abrangente projetada para o gerenciament
 
 1. **Clonar o Repositório**
    ```bash
-   git clone https://github.com/seu-repositorio/ticketmaster.git
+   git clone https://github.com/lstavares/ticketmaster.git
    cd ticketmaster
 
 2. **Construir a Aplicação**
@@ -71,11 +71,8 @@ O projeto Ticketmaster é uma solução abrangente projetada para o gerenciament
 
 ## Documentação
 - Embora este documento forneça uma visão geral básica e instruções de configuração, documentações adicionais sobre endpoints da API e uso podem ser geradas usando ferramentas como Swagger para uma melhor visualização e interação da API.
-- Para visualizar a documentação, após a construção e iniciação dos, acesse o link http://localhost:8081.
+- Para visualizar a documentação, após a construção e iniciação dos componentes, acesse o link http://localhost:8081.
 - Opcionalmente você pode usar o arquivo [users-api.postman_collection.json](users-api.postman_collection.json) para importar e acessar os endpoints da API através do Postman.
-- É possível ainda a execução do comando docker para Swagger UI, para isso, execute o comando abaixo e acesse o link http://localhost:8081.
-    ```bash
-    docker run -p 80:8080 -e SWAGGER_JSON=/foo/openapi.yaml -v $(pwd):/foo swaggerapi/swagger-ui
 
 ## Monitoração
 A inclusão das seguintes métricas em um dashboard proporcionará uma visão abrangente do desempenho e saúde da aplicação:
