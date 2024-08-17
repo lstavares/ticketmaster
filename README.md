@@ -18,6 +18,13 @@ O projeto Ticketmaster é uma solução abrangente projetada para o gerenciament
 - **Mockito**: Para mock de objetos em testes.
 - **Docker**: Para contêinerização da aplicação e suas dependências.
 
+### Frontend
+- **React**: Biblioteca JavaScript para construção de interfaces de usuário.
+- **Node.js**: Ambiente de execução JavaScript server-side.
+- **npm**: Gerenciador de pacotes para Node.js.
+- **Webpack**: Empacotador de módulos JavaScript.
+- **Babel**: Transpilador JavaScript.
+
 ### Ferramentas e Outras Tecnologias
 - **Maven**: Gerenciamento de dependências e ferramenta de construção.
 - **Git**: Sistema de controle de versão.
@@ -31,6 +38,8 @@ O projeto Ticketmaster é uma solução abrangente projetada para o gerenciament
 - Maven
 - Docker e Docker Compose
 - Git (para controle de versão)
+- Node.js
+- npm
 
 ### Passos
 
@@ -43,23 +52,34 @@ O projeto Ticketmaster é uma solução abrangente projetada para o gerenciament
    ```bash
    mvn clean install
 
-3. **Docker**
+3. **Construir a Aplicação Frontend**
+   ```bash
+   cd frontend
+   npm install
+   npm run build
+   cd ..
+   
+4. **Docker**
 - Certifique-se de que o Docker e o Docker Compose estão instalados no seu sistema.
 - Navegue até o diretório raiz do projeto.
 - Construa e inicie os contêineres:
     ```bash
    docker-compose up --build
   
-- Isso configurará o banco de dados PostgreSQL e executará a aplicação.
+- Isso configurará o banco de dados PostgreSQL e executará a aplicação, assim como o swagger e também o frontend da aplicação.
 
 ### Configuração do Banco de Dados
 - O arquivo docker-compose.yml inclui a configuração para o banco de dados PostgreSQL.
 - Scripts de inicialização no diretório init-scripts são automaticamente executados para criar o esquema do banco de dados e inserir dados iniciais.
 
-
 ## Executando a Aplicação
-- Após construir e iniciar os contêineres usando o Docker Compose, a aplicação deve estar acessível em http://localhost:8080/ticketmaster.
+- Após construir e iniciar os contêineres usando o Docker Compose, as APIs da aplicação backend devem estar acessível em http://localhost:8080/ticketmaster.
 - Use o Postman ou qualquer outra ferramenta de teste de API para interagir com os endpoints disponíveis.
+
+## Executando o Frontend
+- Após construir e iniciar os contêineres usando o Docker Compose, a aplicação frontend deve estar acessível em http://localhost:3000.
+- O frontend pode ser acessado diretamente pelo navegador após a inicialização dos contêineres.
+- Para atualizar as dependências do projeto, execute `npm install
 
 ## Testes
 - Testes unitários e de integração podem ser executados com Maven:

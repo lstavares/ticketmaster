@@ -44,6 +44,14 @@ services:
     volumes:
       - ./openapi_ticketmaster_doc.yml:/openapi/openapi.yaml
 
+  frontend:
+    build:
+      context: ./ticketmaster-frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - app
+
 networks:
   default:
     driver: bridge
