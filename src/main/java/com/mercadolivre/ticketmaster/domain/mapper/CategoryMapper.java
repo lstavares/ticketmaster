@@ -32,7 +32,7 @@ public interface CategoryMapper {
     }
 
     default CategoryDTO mapParent(Category parent) {
-        return parent != null ? toDto(parent) : null; // Converte o parent para CategoryDTO ou retorna null
+        return parent != null ? toDto(parent) : null; 
     }
 
     default void mergeFromDto(CategoryDTO categoryDTO, @MappingTarget Category category) {
