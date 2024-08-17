@@ -2,6 +2,7 @@ package com.mercadolivre.ticketmaster.domain.mapper;
 
 import com.mercadolivre.ticketmaster.domain.dto.TicketDTO;
 import com.mercadolivre.ticketmaster.domain.entity.Category;
+import com.mercadolivre.ticketmaster.domain.entity.Severity;
 import com.mercadolivre.ticketmaster.domain.entity.Ticket;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -21,15 +22,12 @@ public interface TicketMapper {
     @Mapping(source = "category.name", target = "category")
     @Mapping(source = "subcategory.name", target = "subcategory")
     @Mapping(source = "severity.id", target = "severityLevel")
+    @Mapping(source = "category.id", target = "categoryId")
+    @Mapping(source = "subcategory.id", target = "subcategoryId")
     TicketDTO toDto(Ticket ticket);
 
     default Category map(String categoryName) {
-        if (categoryName == null) {
-            return null;
-        }
-        Category category = new Category();
-        category.setName(categoryName);
-        return category;
+        return categoryName.isBlank() ? null : Category.builder().name(categoryName).build();
     }
 
     default void mergeFromDto(TicketDTO ticketDTO, @MappingTarget Ticket ticketToUpdate) {
@@ -40,13 +38,13 @@ public interface TicketMapper {
             ticketToUpdate.setDescription(ticketDTO.getDescription());
         }
         if (ticketDTO.getCategoryId() != null) {
-            ticketToUpdate.getCategory().setId(ticketDTO.getCategoryId());
+            ticketToUpdate.setCategory(Category.builder().id(ticketDTO.getCategoryId()).build());
         }
         if (ticketDTO.getSubcategoryId() != null) {
-            ticketToUpdate.getSubcategory().setId(ticketDTO.getSubcategoryId());
+            ticketToUpdate.setSubcategory(Category.builder().id(ticketDTO.getSubcategoryId()).build());
         }
         if (ticketDTO.getSeverityLevel() != null) {
-            ticketToUpdate.getSeverity().setId(ticketDTO.getSeverityLevel());
+            ticketToUpdate.setSeverity(Severity.builder().id(ticketDTO.getSeverityLevel()).build());
         }
     }
 
