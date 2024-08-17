@@ -51,12 +51,12 @@ const CategoryForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
+    <form className="category-form" onSubmit={handleSubmit}>
+      <div className="form-group">
         <label>Name</label>
         <input name="name" value={category.name} onChange={handleChange} required />
       </div>
-      <div>
+      <div className="form-group">
         <label>Parent Category</label>
         <select name="parent" value={category.parent?.id || ''} onChange={handleParentChange}>
           <option value="">-- Select one --</option>
@@ -65,7 +65,7 @@ const CategoryForm = () => {
           ))}
         </select>
       </div>
-      <button type="submit">Save</button>
+      <button type="submit" className="btn-submit">Save</button>
     </form>
   );
 };

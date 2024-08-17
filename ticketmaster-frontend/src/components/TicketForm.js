@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import api from '../services/api';
+import '../App.css';
 
 const TicketForm = ({ ticketId }) => {
+  const { id } = useParams();
   const [ticket, setTicket] = useState({ title: '', description: '', categoryId: '', subcategoryId: '', severityLevel: '' });
   const [categories, setCategories] = useState([]);
   const [subcategories, setSubcategories] = useState({});
@@ -17,12 +19,12 @@ const TicketForm = ({ ticketId }) => {
       })
       .catch(error => console.error('Error fetching categories:', error));
 
-    if (ticketId) {
-      api.get(`/tickets/${ticketId}`)
+    if (id) {
+      api.get(`/tickets/${id}`)
         .then(response => setTicket(response.data))
         .catch(error => console.error('Error fetching ticket:', error));
     }
-  }, [ticketId]);
+  }, [id]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -56,8 +58,8 @@ const TicketForm = ({ ticketId }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const apiMethod = ticketId ? api.put : api.post;
-    const endpoint = ticketId ? `/tickets/${ticketId}` : '/tickets';
+    const apiMethod = id ? api.put : api.post;
+    const endpoint = id ? `/tickets/${id}` : '/tickets';
 
     apiMethod(endpoint, ticket)
       .then(() => {
@@ -74,16 +76,16 @@ const TicketForm = ({ ticketId }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
+    <form className="ticket-form" onSubmit={handleSubmit}>
+      <div className="form-group">
         <label>Title</label>
         <input name="title" value={ticket.title} onChange={handleChange} required />
       </div>
-      <div>
+      <div className="form-group">
         <label>Description</label>
         <textarea name="description" value={ticket.description} onChange={handleChange} required />
       </div>
-      <div>
+      <div className="form-group">
         <label>Category</label>
         <select name="categoryId0" value={selectedCategories[0] || ''} onChange={handleChange} required>
           <option value="">-- Select one --</option>
@@ -94,7 +96,7 @@ const TicketForm = ({ ticketId }) => {
       </div>
       {selectedCategories.map((categoryId, index) => (
         subcategories[index] && subcategories[index].length > 0 && (
-          <div key={`subcategory-${index}`}>
+          <div className="form-group" key={`subcategory-${index}`}>
             <label>Subcategory - {categories.find(cat => cat.id === categoryId)?.name}</label>
             <select name={`categoryId${index + 1}`} value={selectedCategories[index + 1] || ''} onChange={handleChange} required>
               <option value="">-- Select one --</option>
@@ -105,7 +107,7 @@ const TicketForm = ({ ticketId }) => {
           </div>
         )
       ))}
-      <div>
+      <div className="form-group">
         <label>Severity</label>
         <select name="severityLevel" value={ticket.severityLevel} onChange={handleChange} required>
           <option value="">-- Select one --</option>
@@ -115,7 +117,7 @@ const TicketForm = ({ ticketId }) => {
           <option value="4">Low</option>
         </select>
       </div>
-      <button type="submit">Save</button>
+      <button type="submit" className="btn-submit">Save</button>
     </form>
   );
 };
