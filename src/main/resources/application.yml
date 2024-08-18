@@ -16,3 +16,9 @@ spring:
 api:
   users:
     url: ${API_USERS_SERVICE_URL}
+
+feign:
+  client:
+    config:
+      usersClient:
+        loggerLevel: DEBUG
