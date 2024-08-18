@@ -1,0 +1,34 @@
+<configuration>
+    <!-- Encoder para JSON personalizado -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+            <providers>
+                <timestamp>
+                    <timeZone>UTC</timeZone>
+                    <fieldName>timestamp</fieldName>
+                    <pattern>dd/MM/yyyy - HH:mm:ss</pattern>
+                    <timeZone>America/Sao_Paulo</timeZone>
+                </timestamp>
+
+                <mdc>
+                    <fieldNames>
+                        <fieldName>payload</fieldName>
+                    </fieldNames>
+                </mdc>
+
+                <callerData>
+                    <fieldName>caller</fieldName>
+                </callerData>
+
+                <message />
+            </providers>
+        </encoder>
+    </appender>
+
+    <logger name="feign" level="DEBUG"/>
+    <logger name="com.mercadolivre.ticketmaster.infrastructure.client.users.UsersClient" level="DEBUG"/>
+
+    <root level="INFO">
+        <appender-ref ref="CONSOLE" />
+    </root>
+</configuration>
