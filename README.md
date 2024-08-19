@@ -10,7 +10,7 @@ O projeto Ticketmaster é uma solução abrangente projetada para o gerenciament
 - **Spring Boot (3.3.2)**: Framework para criar aplicações Spring autônomas, de grau de produção.
 - **Spring Data JPA**: Para persistência de dados e operações CRUD.
 - **PostgreSQL**: Banco de dados primário para armazenar os dados da aplicação.
-- **H2 Database**: Banco de dados em memória usado para fins de teste.
+- **H2 Database**: Banco de dados em memória usado para fins de testes.
 - **MapStruct**: Para mapeamento de objetos, simplifica a implementação de mapeamentos entre tipos de bean Java.
 - **Lombok**: Ferramenta de biblioteca Java para minimizar/remover código boilerplate.
 - **OpenFeign**: Para criação declarativa de cliente REST, usado para integração de API externa.
@@ -51,20 +51,13 @@ O projeto Ticketmaster é uma solução abrangente projetada para o gerenciament
 2. **Construir a Aplicação**
    ```bash
    mvn clean install
-
-3. **Construir a Aplicação Frontend**
-   ```bash
-   cd frontend
-   npm install
-   npm run build
-   cd ..
    
-4. **Docker**
+3. **Docker**
 - Certifique-se de que o Docker e o Docker Compose estão instalados no seu sistema.
 - Navegue até o diretório raiz do projeto.
 - Construa e inicie os contêineres:
     ```bash
-   docker-compose up --build
+   docker compose up --build
   
 - Isso configurará o banco de dados PostgreSQL e executará a aplicação, assim como o swagger e também o frontend da aplicação.
 
