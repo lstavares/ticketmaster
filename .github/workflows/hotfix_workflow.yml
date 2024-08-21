@@ -1,4 +1,4 @@
-name: Feature Branch Workflow
+name: Hotfix Branch Workflow
 
 on:
   push:
