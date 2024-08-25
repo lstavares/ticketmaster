@@ -12,6 +12,11 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8080/actuator/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
     networks:
       - default
 
@@ -49,6 +54,9 @@ services:
       context: ./ticketmaster-frontend
     ports:
       - "3000:3000"
+    volumes:
+      - ./ticketmaster-frontend:/app
+    entrypoint: ["./wait-for-backend-app.sh", "app", "npm", "start"]
     depends_on:
       - app
 

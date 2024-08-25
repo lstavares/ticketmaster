@@ -3,6 +3,9 @@ FROM node:16 as build
 
 LABEL authors="leandrotavares"
 
+# Install curl
+RUN apt-get update && apt-get install -y curl
+
 # Definindo o diretório de trabalho no contêiner
 WORKDIR /app
 
