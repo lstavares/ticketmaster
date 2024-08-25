@@ -13,6 +13,15 @@ spring:
   jackson:
     default-property-inclusion: non_null
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: "always"
+
 api:
   users:
     url: ${API_USERS_SERVICE_URL}
